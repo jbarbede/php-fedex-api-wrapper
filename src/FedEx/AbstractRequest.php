@@ -47,7 +47,15 @@ abstract class AbstractRequest
      */
     public function __construct(\SoapClient $soapClient = null)
     {
-        $this->soapClient = $soapClient ?: new \SoapClient(static::getWsdlPath(), ['trace' => true]);
+        $this->soapClient = $soapClient ?: new \SoapClient(static::getWsdlPath(), [
+            'trace' => true,
+            'stream_context' => stream_context_create([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false
+                ]
+            ])
+        ]);
     }
 
     /**
