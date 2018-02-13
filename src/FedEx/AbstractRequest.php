@@ -49,6 +49,8 @@ abstract class AbstractRequest
     {
         $this->soapClient = $soapClient ?: new \SoapClient(static::getWsdlPath(), [
             'trace' => true,
+            'exceptions' => true,
+            'cache_wsdl' => WSDL_CACHE_BOTH,
             'stream_context' => stream_context_create([
                 'ssl' => [
                     'verify_peer' => false,
